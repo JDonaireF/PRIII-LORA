@@ -1,6 +1,7 @@
 import React from 'react';
 import './DetalleConsumoMes.css';
 
+
 const DetalleConsumoMes = () => {
   return (
     <div className="detalle-container">
