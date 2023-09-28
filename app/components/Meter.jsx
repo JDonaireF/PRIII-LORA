@@ -5,7 +5,7 @@ function CardMeters({dataMeters}) {
   return (
     <div className="grid grid-cols-4 gap-8">
         {dataMeters.map(meter => (
-        <div key={meter.Id} className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-200">
+        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-200">
             <div className="px-6 py-4">
                 <div className="font-bold text-center text-blue-600 mb-2">Medidor {meter.NumeroMedidor}</div>
                 <p className="text-gray-700 text-sm font-medium">
@@ -32,7 +32,7 @@ function CardMeters({dataMeters}) {
                     </div>
                 </div>
                 <div className="text-center p-4 mt-4">
-                    <Link href="/history" className="bg-black hover:bg-slate-400 text-white text-sm font-bold py-2 px-4 rounded">
+                    <Link href={`/history?id=${meter.Id}`} className="bg-black hover:bg-slate-400 text-white text-sm font-bold py-2 px-4 rounded">
                         VER DEUDAS
                     </Link>
                 </div>
