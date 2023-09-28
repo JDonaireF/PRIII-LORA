@@ -1,0 +1,26 @@
+/* Colores */
+.factura {
+    border: 2px solid #007bff; /* Color azul */
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.encabezado {
+    background-color: #007bff; /* Color azul */
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.datos-factura {
+    background-color: #fff; /* Color blanco */
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.datos-cliente {
+    background-color: #ffff00; /* Color amarillo */
+    padding: 10px;
+    margin-top: 10px;
+}

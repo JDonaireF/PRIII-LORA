@@ -8,7 +8,7 @@ function Navbar () {
             <div class='flex items-center justify-center gap-2 md:gap-8'>
                 <Link href="/meters">Meters</Link>
                 <Link href="/history">History</Link>
-                <Link href="/facture">History</Link>
+                <Link href="/facture">Facture</Link>
             </div>
         </div>
         <div className='mt-4'>
