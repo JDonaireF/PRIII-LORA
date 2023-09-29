@@ -12,6 +12,6 @@ namespace P_Lora.Datos
         }
         //Inyeccion de dependencias
         //Y modelos
-        //public DbSet<Producto> Producto { get; set; }
+        public DbSet<ClienteAPI> ClientesAPI { get; set; }
     }
 }
