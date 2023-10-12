@@ -3,7 +3,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from '../components/Navbar'
 import TableDebts from "../components/Table";
-import withAuth from "../components/Auth";
 
 function History() {
     const [id, setId] = useState([]);
@@ -38,4 +37,4 @@ function History() {
     )
 }
 
-export default withAuth(History);
+export default History;

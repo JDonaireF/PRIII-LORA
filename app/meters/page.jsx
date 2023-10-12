@@ -3,7 +3,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from '../components/Navbar'
 import CardMeters from "../components/Meter";
-import withAuth from "../components/Auth";
 
 function Meters() {
     const [meters, setMeters] = useState([]);
@@ -27,4 +26,4 @@ function Meters() {
     )
 }
 
-export default withAuth(Meters);
+export default Meters;

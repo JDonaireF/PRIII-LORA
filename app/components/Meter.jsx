@@ -2,6 +2,24 @@
 import Link from 'next/link';
 
 function CardMeters({dataMeters}) {
+    const handleDisableMeter = (event) => {
+    event.preventDefault();
+    const id = document.getElementById("id").value;
+
+    fetch(`https://dbloratest.000webhostapp.com/api/meters/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+            router.push("/meters");
+        } else {
+          confirm("Error");
+        }
+      });
+  };
   return (
     <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {dataMeters.map(meter => (
@@ -38,12 +56,15 @@ function CardMeters({dataMeters}) {
                 </div>
             </div>
             <div class="m-2 text-center">
-                <button className="bg-transparent hover:bg-black text-black hover:text-white border border-black text-sm font-bold m-2 p-2 rounded">
-                    DESHABILITAR
-                </button>
-                <button className="bg-blue-500 hover:bg-blue-400 text-white text-sm font-bold m-2 p-2 rounded">
-                    HABILITAR
-                </button>
+                <form className="space-y-6" method="POST">
+                    <input type="hidden" name="id" id="id" value={meter.Id}/>
+                    <button onClick={handleDisableMeter} className="bg-transparent hover:bg-black text-black hover:text-white border border-black text-sm font-bold m-2 p-2 rounded">
+                        DESHABILITAR
+                    </button>
+                    <button className="bg-blue-500 hover:bg-blue-400 text-white text-sm font-bold m-2 p-2 rounded">
+                        HABILITAR
+                    </button>
+                </form>
             </div>
         </div>
         ))}

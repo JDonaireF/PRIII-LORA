@@ -1,13 +1,10 @@
 'use client';
 import React from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react"
 
 export default function Login() {
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   localStorage.setItem("Institution", "")
-  // },[]);
+  /*const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -47,6 +44,30 @@ export default function Login() {
       .catch((error) => {
         confirm("Error:", error);
       });
+  };*/
+  
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const role = document.getElementById("role").value;
+
+    await signIn('credentials', {
+      emailAddress: email,
+      password: password,
+      role: role,
+      redirect: false,
+      callbackUrl: '/meters',
+    }).then((res) => {
+      if (res?.error) {
+        confirm("Inicio de sesion fallido");
+      } else {
+        router.push('/meters')
+      }
+    });
   };
 
   return (
@@ -65,7 +86,7 @@ export default function Login() {
                 </div>
                 <div>
                   <label for="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Rol</label>
-                  <select id="role" name="role" autocomplete="role" className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6">
+                  <select id="role" name="role" className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6">
                     <option>Supervisor</option>
                     <option>Cliente</option>
                   </select>
