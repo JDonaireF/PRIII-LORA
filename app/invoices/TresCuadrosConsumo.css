@@ -1,0 +1,104 @@
+
+
+
+.tres-cuadros-container {
+       background-color: #fff;
+       padding: 16px;
+       border-radius: 8px;
+       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+     }
+     
+     .header {
+       display: flex;
+       justify-content: space-between;
+     }
+     
+     .elfec-title {
+       font-size: 24px;
+       font-weight: bold;
+       color: #0080ff;
+     }
+     
+     .cliente-info {
+      
+       text-align: right;
+       color: #666;
+     }
+     
+     .factura-title {
+      
+       font-size: 24px;
+       font-weight: bold;
+       color: #0080ff;
+       margin-bottom: 16px;
+     }
+     
+     .info {
+      
+       color: #666;
+     }
+     
+     .mes-info {
+       padding: 16px;
+       border: 1px solid #eee;
+       background-color: #e0f2ff;
+       
+       border-radius: 8px;
+       margin-bottom: 16px;
+     }
+     
+     .mes-title {
+       font-size: 20px;
+       font-weight: bold;
+       border-bottom: 2px solid #0080ff;
+       padding-bottom: 8px;
+       color: #0080ff;
+     }
+     
+     .mes-detail {
+       color: #0080ff;
+     }
+     
+     .list-detail {
+       list-style-type: disc;
+       list-style-position: inside;
+       color: #0080ff;
+       padding-left: 20px;
+     }
+     
+     .btn-ver-mas {
+       background-color: #0080ff;
+       color: #fff;
+       padding: 8px 16px;
+       border-radius: 20px;
+       border: none;
+       cursor: pointer;
+       font-weight: bold;
+       transition: background-color 0.2s;
+     }
+     
+     .btn-ver-mas:hover {
+       background-color: #005fbf;
+     }
+     
+     .total-pagar {
+       font-size: 20px;
+       font-weight: bold;
+       color: #0080ff;
+     }
+     
+     .btn-ver-deudas {
+       background-color: #0080ff;
+       color: #fff;
+       padding: 12px 24px;
+       border-radius: 20px;
+       border: none;
+       cursor: pointer;
+       font-weight: bold;
+       transition: background-color 0.2s;
+     }
+     
+     .btn-ver-deudas:hover {
+       background-color: #005fbf;
+     }
+     
