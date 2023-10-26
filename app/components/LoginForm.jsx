@@ -27,7 +27,7 @@ export default function LoginForm() {
             if (rol === 'Supervisor') {
               router.replace('meters');
             } else if (rol === 'Cliente') {
-              router.replace('disabled-meters');
+              router.replace('invoices');
             }
         }
         catch (error) {
