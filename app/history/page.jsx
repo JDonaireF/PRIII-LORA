@@ -3,25 +3,27 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from '../components/Navbar'
 import TableDebts from "../components/Table";
+import { useSession } from "next-auth/react"
 
-function History() {
+export default function History() {
     const [id, setId] = useState([]);
-
     const [debts, setDebts] = useState([]);
+    const { data: session } = useSession();
+
+    if (session?.user.role === "Cliente") {
+        return <div className="flex items-center justify-center">No estas autorizado para ver esta pagina!</div>
+    }
 
     useEffect(() => {
-
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
-    
         if (id) {
-          fetch(`https://dbloratest.000webhostapp.com/api/meters/${id}`)
+          fetch(`http://localhost:3000/api/meters/getHistoryById/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setDebts(data);
             });
         }
-    
         setId(id);
       }, []);
 
@@ -36,5 +38,3 @@ function History() {
         </div>
     )
 }
-
-export default History;

@@ -1,19 +1,25 @@
 import { pool } from "@/config/db";
+import { getSession } from 'next-auth/react';
 
 export default async function getMeters (req, res) {
-    if (req.method === 'GET') {
+  const session = await getSession({ req });
+  const zone = session.user?.zone;
+
+  if (req.method === 'GET') {
       try {
         const [results] = await pool.query(
-          `SELECT M.Id, M.NumeroMedidor, C.Consumo, C.Lectura, C.FechaActualizacion
+          `SELECT M.Id, M.NumeroMedidor, C.Consumo, C.Lectura, C.FechaActualizacion, F.CostoReal
           FROM Medidores M
           JOIN Consumo C ON M.Id = C.IdMedidor
-          WHERE M.Estado = 1
+          JOIN Factura F ON M.NumeroMedidor = F.NumeroMedidor
+          WHERE M.Estado = 1 AND M.Zona = ?
           AND C.FechaActualizacion = (
               SELECT MAX(C2.FechaActualizacion)
               FROM Consumo C2
               WHERE C2.IdMedidor = M.Id
           )
-          ORDER BY M.NumeroMedidor;`,
+          ORDER BY M.Id;`,
+          [zone]
         );
   
         res.status(200).json(results);

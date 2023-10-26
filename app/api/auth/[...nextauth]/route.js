@@ -22,7 +22,6 @@ const authOptions = {
   callbacks: {
     async session({ session, token }) {
       session.user = token.user;
-      session.user.name = token.user.fullName;
       return session
     },
     async jwt({ token, user }) {
@@ -35,10 +34,9 @@ const authOptions = {
 
   pages: {
     signIn: '/login',
-    error: '/auth/error', // Error code passed in query string as ?error=
+    error: '/auth/error',
   }
 }
-
 
 const handler = NextAuth(authOptions);
 
