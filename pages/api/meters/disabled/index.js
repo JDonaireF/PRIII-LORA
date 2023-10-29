@@ -8,10 +8,9 @@ export default async function getMeters (req, res) {
   if (req.method === 'GET') {
       try {
         const [results] = await pool.query(
-          `SELECT M.Id, M.NumeroMedidor, C.Consumo, C.Lectura, C.FechaActualizacion, F.CostoReal
+          `SELECT M.Id, M.NumeroMedidor, C.Consumo, C.Lectura, C.Costo, C.FechaActualizacion
           FROM Medidores M
           JOIN Consumo C ON M.Id = C.IdMedidor
-          JOIN Factura F ON M.NumeroMedidor = F.NumeroMedidor
           WHERE M.Estado = 0 AND M.Zona = ?
           AND C.FechaActualizacion = (
               SELECT MAX(C2.FechaActualizacion)

@@ -65,12 +65,12 @@ function CardMeters({dataMeters, status}) {
                     </div>
                     <div className="text-center">
                         <p className="font-bold p-2">Total</p>
-                        <p>{meter.CostoReal} Bs.</p>
+                        <p>{meter.Costo} Bs.</p>
                     </div>
                 </div>
                 <div className="text-center p-4 mt-4">
                     <Link href={`/history?id=${meter.Id}`} className="bg-black hover:bg-slate-400 text-white text-sm font-bold py-2 px-4 rounded">
-                        VER DEUDAS
+                        VER CONSUMO
                     </Link>
                 </div>
             </div>
@@ -78,22 +78,22 @@ function CardMeters({dataMeters, status}) {
                 {status == 'enabled' ? (
                     <form className="space-y-6" method="POST">
                         <input type="hidden" name="id" id="id" value={meter.Id}/>
-                        <button onClick={handleDisableMeter} type="submit" className="bg-transparent hover:bg-black text-black hover:text-white border border-black text-sm font-bold m-2 p-2 rounded">
+                        <button onClick={handleDisableMeter} type="submit" className="bg-transparen hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 text-sm font-bold m-2 p-2 rounded">
                             DESHABILITAR
                         </button>
-                        <button onClick={handleEnableMeter} type="submit" className="bg-blue-500 text-white text-sm font-bold m-2 p-2 rounded" disabled>
-                            HABILITAR
-                        </button>
+                        <Link href={`/debts?id=${meter.Id}`} className="bg-transparen hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 text-sm font-bold m-2 p-2 rounded">
+                            VER DEUDAS
+                        </Link>
                     </form>
                 ): (
                     <form className="space-y-6" method="POST">
                         <input type="hidden" name="id" id="id" value={meter.Id}/>
-                        <button onClick={handleDisableMeter} type="submit" className="bg-transparent text-black border border-black text-sm font-bold m-2 p-2 rounded" disabled>
-                            DESHABILITAR
-                        </button>
-                        <button onClick={handleEnableMeter} type="submit" className="bg-blue-500 hover:bg-blue-400 text-white text-sm font-bold m-2 p-2 rounded">
+                        <button onClick={handleEnableMeter} type="submit" className="bg-transparen hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 text-sm font-bold m-2 p-2 rounded">
                             HABILITAR
                         </button>
+                        <Link href={`/debts?id=${meter.Id}`} className="bg-transparen hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 text-sm font-bold m-2 p-2 rounded">
+                            VER DEUDAS
+                        </Link>
                     </form>
                 )}
                 

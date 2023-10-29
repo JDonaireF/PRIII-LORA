@@ -5,7 +5,7 @@ import { Fragment} from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-function Navbar() {
+export default function Navbar() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -132,5 +132,3 @@ function Navbar() {
     </Popover>
   );
 };
-
-export default Navbar;

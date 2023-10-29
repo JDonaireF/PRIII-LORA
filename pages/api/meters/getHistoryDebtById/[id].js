@@ -6,10 +6,14 @@ export default async function getMeterById (req, res) {
     if (req.method === 'GET') {
         try {
             const [results] = await pool.query(
-                `SELECT C.Consumo, C.Lectura, C.Costo, C.FechaActualizacion
-                FROM Medidores M
-                JOIN Consumo C ON M.Id = C.IdMedidor
-                WHERE M.Estado = 1 AND M.Id = ?`,
+                `SELECT D.*, C.Consumo, C.Lectura
+                FROM Deudas D
+                JOIN Consumo C ON D.IdMedidor = C.IdMedidor
+                WHERE D.IdMedidor = ? AND C.FechaActualizacion = (
+                    SELECT MAX(C2.FechaActualizacion)
+                    FROM Consumo C2
+                    WHERE C2.IdMedidor = D.IdMedidor
+                ); `,
                 [id]
             );
 
