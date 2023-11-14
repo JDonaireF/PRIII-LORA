@@ -18,20 +18,23 @@ export default function Navbar() {
     return null;
   }
 
-  // const [fullname, setFullName] = useState(sessionStorage.getItem('fullName'));
-  // const [role, setRole] = useState(localStorage.getItem('role'));
-
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/login' });
   }
 
   return (
     <Popover className="flex items-center border-b-2 px-6 py-2 h-20 bg-white">
-      <h1 className='font-bold text-lg'>ELFEC</h1>
+      <h1 className='font-bold text-lg text-blue-700'>ELFEC</h1>
       <div className='grow'>
         <div className='hidden lg:inline-flex ml-20 items-center justify-center gap-2 md:gap-8'>
-          <Link className='font-semibold text-gray-500 text-sm' href="/meters">Habilitados</Link>
-          <Link className='font-semibold text-gray-500 text-sm' href="/disabled-meters">Deshabilitados</Link>
+          {session?.user.role === "Cliente" ? (
+            <></>
+          ) : (
+            <>
+              <Link className='font-semibold text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/meters">Habilitados</Link>
+              <Link className='font-semibold text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/disabled-meters">Deshabilitados</Link>
+            </>
+          )}
         </div>
       </div>
       <div className='flex grow items-center justify-end sm:hidden'>
@@ -48,7 +51,7 @@ export default function Navbar() {
           <div className='rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 divide-y-2 divide-gray-50'>
             <div className='px-5 pt-5 pb-6'>
               <div className='flex items-center justify-between'>
-                <h1 className='font-bold'>ELFEC</h1>
+                <h1 className='font-bold text-blue-700'>ELFEC</h1>
                 <div className='-mr-2'>
                   <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 
                     hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -66,17 +69,29 @@ export default function Navbar() {
                       <div className='inline-block'>
                         <img className="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                         <div className="font-medium dark:text-black">
-                          <div className="text-sm">{session.user?.fullName}</div>
+                          <div className="text-xs">{session.user?.fullName}</div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">
                             <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{session.user?.role}</span>
                           </div>
                         </div>
                       </div>
+                      {session?.user.role === "Cliente" ? (
+                      <></>
+                      ) : (
+                        <>
+                      <div>
+                        <Link className='text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/meters">Habilitados</Link>
+                      </div>
+                      <div>
+                        <Link className='text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/disabled-meters">Deshabilitados</Link>
+                      </div>
+                        </>
+                      )}
                       <div className='inline-flex'>
                         <svg className="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
                         </svg>
-                        <button onClick={handleSignOut} className='px-2'>Cerrar sesion</button>
+                        <button onClick={handleSignOut} className='px-2 text-sm font'>Cerrar sesion</button>
                       </div>
                     </nav>
                   </>
@@ -123,12 +138,6 @@ export default function Navbar() {
             </div>
           </div>
         </>):(<></>)}
-      
-      {/* <div className='inline-flex lg:hidden'>
-          <svg className="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 14">
-            <path d="M16 2H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 0 1 0 2Z"/>
-          </svg>
-        </div> */}
     </Popover>
   );
 };

@@ -2,35 +2,29 @@
 
 import React from 'react';
 import './TresCuadrosConsumo.css';
-import CardMetersClient from '../components/MetersClient';
 import { useEffect, useState } from "react";
+import Navbar from '../components/Navbar'
+import CardMetersClient from '../components/MetersClient';
 
-const TresCuadrosConsumo = () => {
+export default function MetersMonth () {
   const [meters, setMeters] = useState([]);
 
-
     useEffect(() => {
-
       if (typeof window !== "undefined") {
-
         fetch("http://localhost:3000/api/client")
-
           .then((response) => response.json())
-
           .then((data) => {
-
             setMeters(data);
-
           });
-
       }
-
     }, []);
    return (
-    
-    <CardMetersClient dataMeters={meters}>
-      
-    </CardMetersClient>
+    <div>
+      <Navbar />
+      <div className="m-6 rounded bg-white p-8">
+        <CardMetersClient dataMeters={meters}></CardMetersClient>
+      </div>
+    </div>
 
   //   <div className="tres-cuadros-container">
   //   {/* Contenido ELFEC y cliente */}
@@ -120,5 +114,3 @@ const TresCuadrosConsumo = () => {
   // </div>
   );
 };
-
-export default TresCuadrosConsumo;

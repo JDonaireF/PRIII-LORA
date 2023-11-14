@@ -16,7 +16,7 @@ export default function TableDebts({ dataDebts }) {
                         Costo Total
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Fecha
+                        Mes
                     </th>
                 </tr>
             </thead>
@@ -24,16 +24,16 @@ export default function TableDebts({ dataDebts }) {
                 {dataDebts.map(debt => (
                     <tr className="bg-white border-b dark:bg-white dark:border-gray-400">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-                            {debt.Lectura}
+                            {debt.LecturaFinal}
                         </th>
                         <td className="px-6 py-4">
-                            {debt.Consumo}
+                            {debt.ConsumoFinal}
                         </td>
                         <td className="px-6 py-4">
                             {debt.CostoTotal} Bs.
                         </td>
                         <td className="px-6 py-4">
-                            {new Date(debt.FechaPago).toLocaleDateString()}
+                            {new Date(debt.FechaRegistro).toLocaleDateString('es-ES', { month: 'long' })}
                         </td>
                     </tr>
                 ))}

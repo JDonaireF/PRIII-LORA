@@ -6,7 +6,7 @@ export default async function getMeterById (req, res) {
     if (req.method === 'POST') {
         try {
             const [results] = await pool.query(
-                `UPDATE Medidores SET Estado = 0
+                `UPDATE Medidor SET Estado = 0
                  WHERE Id = ?;`,
                 [id]
             );

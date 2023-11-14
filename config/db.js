@@ -5,7 +5,7 @@ const pool = createPool({
     user: 'root',
     password: '',
     port: '3308',
-    database: 'dblora'
+    database: 'db_lora'
 })
 
 export {pool};

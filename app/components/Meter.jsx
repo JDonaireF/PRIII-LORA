@@ -46,7 +46,7 @@ function CardMeters({dataMeters, status}) {
             <div className="px-6 py-4">
                 <div className="font-bold text-center text-blue-600 mb-2">Medidor {meter.NumeroMedidor}</div>
                 <p className="text-gray-700 text-sm font-medium">
-                    Cliente: Esteban Quito Lozada
+                    Cliente: {meter.NombreCliente}
                 </p>
             </div>
             <div className="rounded bg-white mx-4 p-2 text-sm">
@@ -57,7 +57,7 @@ function CardMeters({dataMeters, status}) {
                     </div>
                     <div className="text-center">
                         <p className="font-bold p-2">Hora/Registro</p>
-                        <p>{new Date(meter.FechaActualizacion).toLocaleTimeString()}</p>
+                        <p>{new Date(meter.FechaRegistro).toLocaleTimeString()}</p>
                     </div>
                     <div className="text-center">
                         <p className="font-bold p-2">Lectura</p>
@@ -96,7 +96,6 @@ function CardMeters({dataMeters, status}) {
                         </Link>
                     </form>
                 )}
-                
             </div>
         </div>
         ))

@@ -6,10 +6,9 @@ export default async function getMeterById (req, res) {
     if (req.method === 'GET') {
         try {
             const [results] = await pool.query(
-                `SELECT C.Consumo, C.Lectura, C.Costo, C.FechaActualizacion
-                FROM Medidores M
-                JOIN Consumo C ON M.Id = C.IdMedidor
-                WHERE M.Estado = 1 AND M.Id = ?`,
+                `SELECT NumeroMedidor, ConsumoFinal, LecturaFinal, CostoTotal, FechaRegistro
+                FROM Factura
+                WHERE IdMedidor = ? AND Estado = 0;`,
                 [id]
             );
 

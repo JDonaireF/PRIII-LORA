@@ -9,7 +9,9 @@ export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("");
-    
+
+    const [error, setError] = useState();
+
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -22,6 +24,7 @@ export default function LoginForm() {
                 redirect: false,
             });
             if (res.error) {
+                setError("Credenciales incorrectas");
                 return;
             }
             if (rol === 'Supervisor') {
@@ -42,15 +45,15 @@ export default function LoginForm() {
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
               <form onSubmit={handleSubmit} className="space-y-6" method="POST">
                   <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Correo</label>
+                      <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-900 dark:text-black">Correo</label>
                       <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" placeholder="name@gmail.com" required=""/>
                   </div>
                   <div>
-                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Contraseña</label>
+                      <label htmlFor="password" className="block mb-1 text-sm font-medium text-gray-900 dark:text-black">Contraseña</label>
                       <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="••••••••" className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" required=""/>
                   </div>
                   <div>
-                    <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Rol</label>
+                    <label htmlFor="role" className="block text-sm font-medium text-gray-900 dark:text-black">Rol</label>
                     <select onChange={(e) => setRol(e.target.value)} id="role" name="role" className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6">
                       <option></option>
                       <option>Supervisor</option>
@@ -58,7 +61,10 @@ export default function LoginForm() {
                     </select>
                   </div>
                   <div className="flex items-center justify-between">
-                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Olvidaste tu contraseña?</a>
+                    <div>
+                      <a href="#" className="text-xs font-medium text-primary-600 hover:underline dark:text-primary-500">Olvidaste tu contraseña?</a>
+                    </div>
+                    {error && <div className="text-red-500 text-xs font-semibold">{ error }</div>}
                   </div>
                   <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold m-2 p-2 rounded">
                     Ingresar
