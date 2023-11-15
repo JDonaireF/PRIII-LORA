@@ -8,7 +8,7 @@ export default async function getMeterById (req, res) {
             const [results] = await pool.query(
                 `SELECT NumeroMedidor, ConsumoFinal, LecturaFinal, CostoTotal, FechaRegistro
                 FROM Factura
-                WHERE IdMedidor = ? AND Estado = 0;`,
+                WHERE IdMedidor = ? AND Estado = 1;`,
                 [id]
             );
 
