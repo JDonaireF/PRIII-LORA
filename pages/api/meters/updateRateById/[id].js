@@ -5,13 +5,16 @@ export default async function getMeterById (req, res) {
 
     if (req.method === 'POST') {
         try {
+            const { rate } = req.body;
+            
             const [result] = await pool.query(
-                `UPDATE Medidor SET Estado = 1
-                 WHERE Id = ?;`,
-                [id]
+                `UPDATE Consumo
+                SET Costo = Consumo * ?
+                WHERE IdMedidor = ?;`,
+                [rate, id]
             );
 
-            res.status(200).json({ message: 'Enabled successfully' });
+            res.status(200).json({ message: 'Rate updated successfully' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

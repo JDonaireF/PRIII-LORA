@@ -6,7 +6,7 @@ const authOptions = {
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials, req) {
-        const res = await fetch("http://apitestingelfec.somee.com/api/Users/login", {
+        const res = await fetch("http://elfecapitest.somee.com/api/Users/login", {
         //const res = await fetch("https://localhost:7290/api/Users/login", {
           method: 'POST',
           headers: { "Content-Type": "application/json" },

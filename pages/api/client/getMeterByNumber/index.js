@@ -1,15 +1,15 @@
 import { pool } from "@/config/db";
+import { getSession } from 'next-auth/react';
 
 export default async function getMeters(req, res) {
-  const { id } = req.query;
+  const session = await getSession({ req });
+  const number = session.user?.meterNumber;
 
   if (req.method === 'GET') {
     try {
       const [results] = await pool.query(
-              `SELECT * FROM Factura
-              WHERE Id = ?
-              ORDER BY id DESC LIMIT 1;`,
-              [id]
+              `SELECT * FROM Medidor
+              WHERE NumeroMedidor = '${number}';`,
             );
 
       res.status(200).json(results[0]);

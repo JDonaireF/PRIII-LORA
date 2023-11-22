@@ -69,7 +69,7 @@ function CardMeters({dataMeters, status}) {
                     </div>
                 </div>
                 <div className="text-center p-4 mt-4">
-                    <Link href={`/history?id=${meter.Id}`} className="bg-black hover:bg-slate-400 text-white text-sm font-bold py-2 px-4 rounded">
+                    <Link href={`/consume-history?id=${meter.Id}`} className="bg-black hover:bg-slate-400 text-white text-sm font-bold py-2 px-4 rounded">
                         VER CONSUMO
                     </Link>
                 </div>

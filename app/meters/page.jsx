@@ -39,7 +39,7 @@ export default function Meters() {
         .then((response) => response.json())
         .then((data) => {
           const promises = data.map((meter) =>
-            fetch(`https://localhost:7290/api/Users/getClient?meterNumber=${meter.NumeroMedidor}`)
+            fetch(`http://elfecapitest.somee.com/api/Users/getClient?meterNumber=${meter.NumeroMedidor}`)
               .then((response) => response.json())
           );
 

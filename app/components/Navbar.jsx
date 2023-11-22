@@ -71,7 +71,7 @@ export default function Navbar() {
                         <div className="font-medium dark:text-black">
                           <div className="text-xs">{session.user?.fullName}</div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">
-                            <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{session.user?.role}</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400">{session.user?.role}</span>
                           </div>
                         </div>
                       </div>
@@ -108,7 +108,7 @@ export default function Navbar() {
               <div className="font-medium dark:text-black">
                 <div className="text-sm">{session.user?.fullName}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{session.user?.role}</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400">{session.user?.role}</span>
                 </div>
               </div>
               <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 

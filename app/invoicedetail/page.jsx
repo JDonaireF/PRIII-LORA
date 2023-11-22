@@ -55,8 +55,7 @@ import Navbar from '../components/Navbar'
 export default function ConsumeDetails({}) {
   const { data: session } = useSession();
   const [id, setId] = useState(null);
-  const [details, setDetails] = useState(null);
-  const [formValues, setFormValues] = useState({
+  const [details, setDetails] = useState({
     NumeroMedidor: "",
     Consumo: "",
     Lectura: "",
@@ -72,8 +71,7 @@ export default function ConsumeDetails({}) {
       fetch(`http://localhost:3000/api/client/getDetailsById/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        setDetails(data);
-        setFormValues({
+        setDetails({
           NumeroFactura: data.Id,
           NumeroMedidor: data.NumeroMedidor,
           Consumo: data.ConsumoFinal,
@@ -102,17 +100,17 @@ export default function ConsumeDetails({}) {
             <h2 className="factura-title">
               Detalle de Consumo
             </h2>
-            <p className="info">Número de Factura: <strong> {formValues.NumeroFactura}</strong></p>
-            <p className="info">Fecha de Emisión: <strong> {new Date(formValues.FechaRegistro).toLocaleDateString()}</strong></p>
+            <p className="info">Número de Factura: <strong> {details.NumeroFactura}</strong></p>
+            <p className="info">Fecha de Emisión: <strong> {new Date(details.FechaRegistro).toLocaleDateString()}</strong></p>
           </div>
 
           <hr className="my-4" />
           <div className="mes-info">
             <h3 className="mes-title"></h3>
             <p className="mes-detail"><strong>Familia: {session?.user.fullName}</strong> </p>
-            <p className="mes-detail"><strong>Consumo Total:</strong> {formValues.Consumo} Kw</p>
+            <p className="mes-detail"><strong>Consumo Total:</strong> {details.Consumo} Kw</p>
             <p className="mes-detail"><strong>KW Promedio:</strong> 0.6 kw/h</p>
-            <p className="mes-detail"><strong>Consumo en BS:</strong> {formValues.Costo} Bs.</p>
+            <p className="mes-detail"><strong>Consumo en BS:</strong> {details.Costo} Bs.</p>
             <p className="mes-detail"><strong>Meses:</strong> Aplica a corte</p>
             <div className="text-center mt-4">
               <Link href="/invoices">Volver</Link>
@@ -121,7 +119,7 @@ export default function ConsumeDetails({}) {
           <hr className="my-4" />
 
           <div className="text-right">
-            <p className="total-pagar">Total a Pagar ({formValues.Costo}): <strong>Bs.</strong></p>
+            <p className="total-pagar">Total a Pagar ({details.Costo}): <strong>Bs.</strong></p>
           </div>
         </div>
       </div>
