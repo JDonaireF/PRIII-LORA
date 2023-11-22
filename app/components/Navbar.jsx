@@ -33,6 +33,7 @@ export default function Navbar() {
             <>
               <Link className='font-semibold text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/meters">Habilitados</Link>
               <Link className='font-semibold text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/disabled-meters">Deshabilitados</Link>
+              <Link className='font-semibold text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/report">Reportes</Link>
             </>
           )}
         </div>
@@ -84,6 +85,9 @@ export default function Navbar() {
                       </div>
                       <div>
                         <Link className='text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/disabled-meters">Deshabilitados</Link>
+                      </div>
+                      <div>
+                        <Link className='text-gray-500 text-sm tracking-tighter hover:text-blue-600' href="/report">Reportes</Link>
                       </div>
                         </>
                       )}
