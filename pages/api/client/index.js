@@ -1,20 +1,13 @@
 import { pool } from "@/config/db";
 import { getSession } from 'next-auth/react';
 
-export default async function getMeters(req, res) {
+export default async function getMetersClient(req, res) {
   const session = await getSession({ req });
   const number = session.user?.meterNumber;
 
   if (req.method === 'GET') {
     try {
        const [results] = await pool.query(
-              // `SELECT M.Id, M.NumeroMedidor, MAX(C.Consumo) AS Consumo, C.Lectura, MAX(C.FechaActualizacion) AS FechaActualizacion, MAX(F.CostoReal) AS CostoReal
-              // FROM Medidores M
-              // JOIN Consumo C ON M.Id = C.IdMedidor
-              // JOIN Factura F ON M.NumeroMedidor = F.NumeroMedidor
-              // WHERE M.NumeroMedidor = '${number}'
-              //   AND C.FechaActualizacion BETWEEN NOW() - INTERVAL 3 MONTH AND NOW()
-              // GROUP BY M.Id, M.NumeroMedidor, C.Lectura;`,
               `SELECT * FROM Factura
               WHERE NumeroMedidor = '${number}'
               AND FechaRegistro BETWEEN NOW() - INTERVAL 4 MONTH AND NOW()

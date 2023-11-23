@@ -1,6 +1,6 @@
 import { pool } from "@/config/db";
 
-export default async function getMeters(req, res) {
+export default async function getDetailsById(req, res) {
   const { id } = req.query;
 
   if (req.method === 'GET') {

@@ -16,6 +16,9 @@ export default function TableConsume({ dataConsume }) {
                         Total
                     </th>
                     <th scope="col" className="px-6 py-3">
+                        Hora
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                         Fecha
                     </th>
                 </tr>
@@ -33,7 +36,10 @@ export default function TableConsume({ dataConsume }) {
                             {consume.Costo} Bs.
                         </td>
                         <td className="px-6 py-4">
-                            {new Date(consume.FechaActualizacion).toLocaleDateString()}
+                            {new Date(consume.FechaRegistro).toLocaleTimeString()}
+                        </td>
+                        <td className="px-6 py-4">
+                            {new Date(consume.FechaRegistro).toLocaleDateString()}
                         </td>
                     </tr>
                 ))}

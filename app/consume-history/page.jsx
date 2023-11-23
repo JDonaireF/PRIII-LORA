@@ -112,12 +112,7 @@ export default function History() {
                     <div className="flex justify-end">
                         <form method="POST">
                             <div className="flex items-center">
-                                <select onChange={handleChange} id="rate" name="rate" className="pl-3 block w-25 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6">
-                                    <option></option>
-                                    <option>0.3</option>
-                                    <option>0.6</option>
-                                    <option>0.9</option>
-                                </select>
+                                <input onChange={handleChange} id="rate" name="rate" className="pl-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6"/>
                                 <button onClick={handleUpdateRate} type="submit" className="bg-transparen hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 text-xs font-bold m-2 p-2 rounded">
                                     Actualizar tarifa
                                 </button>

@@ -1,7 +1,7 @@
 import { pool } from "@/config/db";
 import { getSession } from 'next-auth/react';
 
-export default async function getMeters(req, res) {
+export default async function getMeterByNumber(req, res) {
   const session = await getSession({ req });
   const number = session.user?.meterNumber;
 

@@ -1,7 +1,7 @@
 import { pool } from "@/config/db";
 import { getSession } from 'next-auth/react';
 
-export default async function getMeters (req, res) {
+export default async function getMetersDisabled (req, res) {
   const session = await getSession({ req });
   const zone = session.user?.zone;
 
