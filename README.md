@@ -1,34 +1,202 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Manual Tecnico
+## Introducción
 
-## Getting Started
+   El proyecto "LORA" emerge como una solución para la gestión eficiente de lecturas de medidores de energía eléctrica. Esta aplicación redefine la experiencia de controlar el consumo eléctrico, proporcionando a usuarios y supervisores una plataforma integral y confiable desde la seguridad en la autenticación hasta los reportes mediante graficas.
 
-First, run the development server:
+## Descripción del proyecto
 
+   A través de la simulación de señales LORA, los datos se transfieren eficientemente a un servidor y se comparan con una base de datos simulada de ELFEC para calcular los costos de consumo energético en periodos diarios y mensuales. El objetivo principal es optimizar el proceso de cobro en función del consumo real de energía. Este proyecto busca maximizar la eficiencia en la gestión de datos y mejorar la precisión en la facturación de servicios eléctricos.
+
+## Roles / integrantes
+
+   Kevin Davor Vergara Orellana/Team Leader
+
+   Josep Bradley Donaire Flores/GIT Master
+
+   Erlan Luis Vedia Herrera/DB Architect
+
+   Franco Andre Rojas Morales Bermudez/QA Tester
+
+## Arquitectura del software
+
+   La arquitectura de "LORA" se basa en un modelo cliente-servidor, con una aplicación web/móvil que interactúa con un servidor central y una base de datos. Los componentes principales incluyen:
+
+- **Cliente:** Interfaz web/móvil para clientes y supervisores.
+- **Servidor:** Gestiona la lógica de negocios y se comunica con la base de datos.
+- **Base de Datos:** Almacena información crítica sobre los medidores, el consumo y facturas.
+- **API/Servicios Web:** Facilita la comunicación entre el cliente y el servidor y almacena a los usuarios.
+
+Se emplean patrones de diseño como el Modelo-Vista-Controlador (MVC) para la simulación de la API.
+
+## Requisitos del sistema
+- Requerimientos de Hardware (mínimo): (cliente)
+  - Sistema operativo
+  - Procesador Core i3 7th Gen
+  - Memoria RAM 4Gb
+  - Espacio en disco 10 GB
+  - Conexión a internet
+- Requerimientos de Software: (cliente)
+  - Sistema operativo Windows 10/Linux
+  - Conexión a Internet
+  - Navegador Web Chrome, Opera, Edge
+- Requerimientos de Hardware (server/ hosting/BD)
+  - Sistema operativo
+  - Procesador Core i5 9th Gen
+  - Memoria RAM 8Gb
+  - Espacio en disco 40 GB
+- Requerimientos de Software (server/ hosting/BD)
+  - Sistema operativo
+  - Conexión a Internet
+  - Conexión a la BD
+  - Conexión a la simulación Mqtt
+
+## Instalación y configuración 
+1. **Descarga del Software**
+- Accede al repositorio del proyecto en [JDonaireF/PRIII-LORA](https://github.com/JDonaireF/PRIII-LORA/).
+- Haz clic en el botón "Clone" o "Download" para descargar el código fuente.
+
+2. **Instalación del Software**
+
+   ***Nota:** Se requiere de tener instalado node.js.*
+
+- Abre una terminal o línea de comandos.
+- Navega al directorio donde descargaste el código fuente.
+- Ejecuta los siguientes comandos de instalación:
+```bash
+npm install mysql2 axios
+
+npm install next-pwa
+
+npm install react-icons --save
+
+npm install @headlessui/react 
+
+npm install next-auth
+
+npm install --save chart.js react-chartjs-2
+```
+Estos comandos instalarán las dependencias del proyecto.
+
+3. **Configuración del Software:**
+- Abre el archivo de configuración **next.config.js** en un editor de texto.
+- Verifica si las configuraciones son las siguientes:
+```bash
+const nextConfig = {
+
+...withPWA({
+
+`        `dest: 'public',
+
+`        `register: 'true',
+
+`        `skipWaiting: 'true',
+
+`    `})
+
+}
+
+module.exports = nextConfig
+```
+4. **Establecer Conexión con Base de Datos:**
+
+   El software utiliza una base de datos en MySQL, asegúrese de que el servidor de la base de datos esté en funcionamiento.
+
+   Abre el archivo de configuración de la base de datos en la carpeta **config** el archivo **db.js** y proporciona los detalles de conexión:
+```bash
+const pool = createPool({
+
+`    `host: 'localhost',
+
+`    `user: usuario,
+
+`    `password: 'contraseña',
+
+`    `port: 'puerto',
+
+`    `database: 'nombre\_de\_la\_base\_de\_datos'
+
+})
+```
+5. **Iniciar la Aplicación:**
+- Regresa a la terminal.
+- Ejecuta el siguiente comando para iniciar la aplicación:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
+6. **Verificar la Conexión:**
+- Abre un navegador web.
+- Accede a la aplicación en local [http://localhost:3000](http://localhost:300).
+- Verifica que la aplicación esté funcionando correctamente.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## PROCEDIMIENTO DE HOSTEADO / HOSTING (configuración)
+- **Sitio Web.**
+- **B.D.**
+- **API / servicios Web**
+## GIT
+- Versión final entregada del proyecto.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+  Enlace: [JDonaireF/PRIII-LORA](https://github.com/JDonaireF/PRIII-LORA/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Entrega compilados ejecutables
 
-## Learn More
+  Drive: [Build - LORA](https://drive.google.com/file/d/1PjCUr4LlAfcrhUFgYWhTr50Ds0_4_kxQ/view)
 
-To learn more about Next.js, take a look at the following resources:
+## Personalización y configuración
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   El supervisor cuenta con la capacidad de ajustar la tarifa de consumo de los medidores respectivos al acceder al historial de consumo. Asimismo, tiene la facultad de habilitar y deshabilitar dichos dispositivos según sea necesario.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Seguridad 
 
-## Deploy on Vercel
+   Consideraciones de seguridad: Permisos de acceso, y autenticación de usuarios.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Recomendaciones para prácticas de seguridad: Gestión adecuada de credenciales.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Depuración y solución de problemas 
+- **Identificación de Problemas Comunes**
+  - **Errores de Consola:** Revise la consola del navegador para identificar mensajes de error o advertencias. Esto puede proporcionar pistas sobre posibles problemas en el lado del cliente.
+
+- **Solución de Problemas y Mensajes de Error:**
+
+  - **Errores de Construcción:** Si encuentra problemas durante la construcción (por ejemplo, al ejecutar npm run build), verifique las dependencias y asegúrese de tener las versiones correctas de   Node.js y npm.
+  - **Problemas de Rutas:** Si la aplicación no se carga correctamente, verifique las rutas en la configuración de Next.js y asegúrese de que coincidan con la estructura de archivos y carpetas.
+  - **Errores de API:** Si la aplicación depende de servicios externos o APIs, asegúrese de que la conexión sea exitosa y maneje posibles errores de respuesta.
+## Glosario de términos 
+
+- **Next.js:** Un framework de desarrollo web de React.js que permite construir aplicaciones web modernas con renderización del lado del servidor y otras características avanzadas.
+- **B.D:** Un sistema organizado para recopilar, almacenar y gestionar datos, generalmente accesible mediante consultas.
+- **MySQL:** Sistema de gestión de bases de datos utilizado en el proyecto para almacenar información crítica sobre medidores, consumo y facturas.
+- **API REST:** Interfaz de programación de aplicaciones basada en HTTP que sigue los principios de REST (Transferencia de Estado Representacional) para facilitar la comunicación entre sistemas.
+- **NPM:** Herramienta utilizada para gestionar las dependencias del proyecto, facilitando la instalación y actualización de paquetes de software.
+- **QA Tester:** Persona encargada de realizar pruebas de calidad para identificar y corregir posibles problemas en el software.
+- **MVC:** Patrón de diseño de software que separa la lógica de la aplicación en tres componentes principales: modelo, vista y controlador.
+- **MQTT:** Protocolo de mensajería para la comunicación entre dispositivos, utilizado en la simulación del proyecto para la transferencia de datos.
+- **PWA:** Aplicación web que utiliza tecnologías modernas para proporcionar una experiencia similar a la de una aplicación nativa, incluyendo la capacidad de trabajar sin conexión.
+- **Middleware:** Software que actúa como intermediario entre diferentes aplicaciones, permitiendo la comunicación y la gestión de datos entre ellas.
+- **Git:** Un sistema de control de versiones distribuido utilizado para el seguimiento de cambios en el código fuente durante el desarrollo de software.
+- **Hosting:** Servicio que permite a los usuarios publicar su aplicación o sitio web en Internet, haciéndolo accesible a otros usuarios.
+- **Scripts:** Conjunto de comandos o instrucciones.
+- **Root:** Usuario con privilegios máximos en una base de datos, con control total sobre la misma.
+## Referencias y recursos adicionales 
+
+   [Next.js](https://nextjs.org/docs)
+
+   [Flowbite](https://flowbite.com/docs/getting-started/introduction/)
+
+   [ChartJS](https://react-chartjs-2.js.org/)
+
+   [Next-Auth](https://next-auth.js.org/getting-started/introduction)
+
+   [Next-Pwa](https://www.npmjs.com/package/next-pwa)
+
+## Herramientas de Implementación
+- Lenguajes de programación:
+
+  C#, JS, JSX
+
+- Frameworks:
+
+  Next.js
+
+  Entity Framework
+
+- APIs de terceros.
