@@ -130,26 +130,31 @@ npm run dev
 
 ## PROCEDIMIENTO DE HOSTEADO / HOSTING (configuración)
 - **Sitio Web.**
-Compilación del código mediante el comando npm run build. 
+  
+   Compilación del código mediante el comando npm run build. 
 Utilización del proveedor de hosting Vercel. 
 Configuración del despliegue automático desde el repositorio. 
 Definición de variables de entorno esenciales, como las API endpoints y claves de acceso. 
 
 - **B.D.**
-Ejecutar el script en el servidor 
+
+   Ejecutar el script en el servidor 
 Script:
 
 - **API / servicios Web**
-Despliegue de la API en un servidor compatible con aplicaciones ASP.NET, en este caso, Somee. 
+
+   Despliegue de la API en un servidor compatible con aplicaciones ASP.NET, en este caso, Somee. 
 Subida de la aplicación mediante el FileManager del hosting para facilitar el consumo de la API. 
 Creación de la base de datos denominada "ElfecDB" y ejecución del script de la tabla "User" con sus datos correspondientes. 
 Script: 
 
 Credenciales Hosting: 
+
 Username:	GPTesis 
 Password:	1\1\WO23ao4?7Uc< 
 
 Credenciales BD: 
+
 SQL Server address:	ElfecDB.mssql.somee.com 
 Login name:		GPTesis_SQLLogin_1 
 Login Password: 	zhr7t8ety5
