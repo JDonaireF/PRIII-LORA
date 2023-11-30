@@ -140,7 +140,195 @@ Definición de variables de entorno esenciales, como las API endpoints y claves 
 
    Ejecutar el script en el servidor 
 Script:
+```bash
+CREATE TABLE Medidor (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    NumeroMedidor VARCHAR(255),
+    Zona VARCHAR(255),
+    Estado TINYINT DEFAULT 1,
+    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
+CREATE TABLE Consumo (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Consumo FLOAT,
+    Lectura VARCHAR(255),
+    Costo DECIMAL(10, 2) DEFAULT NULL,
+    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    IdMedidor INT,
+    FOREIGN KEY (IdMedidor) REFERENCES Medidor(Id)
+);
+
+CREATE TABLE Factura (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    NumeroMedidor VARCHAR(255),
+    ConsumoFinal FLOAT,
+    LecturaFinal VARCHAR(255),
+	CostoTotal FLOAT,
+    Estado TINYINT NOT NULL DEFAULT 0,
+    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    IdMedidor INT,
+    FOREIGN KEY (IdMedidor) REFERENCES Medidor(Id)
+);
+
+DELIMITER //
+
+CREATE EVENT IF NOT EXISTS `Generar_Factura_Mensual` 
+ON SCHEDULE EVERY 1 MONTH STARTS (CURRENT_DATE + INTERVAL 1 DAY)
+DO
+BEGIN
+    -- Obtener el último consumo para cada medidor
+    INSERT INTO Factura (NumeroMedidor, ConsumoFinal, LecturaFinal, CostoTotal, FechaRegistro, FechaActualizacion, IdMedidor)
+    SELECT 
+        m.NumeroMedidor,
+        c.Consumo,
+        c.Lectura,
+        c.Costo,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        c.IdMedidor
+    FROM Consumo c
+    JOIN Medidores m ON c.IdMedidor = m.Id
+    WHERE MONTH(c.FechaRegistro) = MONTH(NOW()) AND YEAR(c.FechaRegistro) = YEAR(NOW())
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Factura f
+        WHERE f.IdMedidor = c.IdMedidor
+        AND MONTH(f.FechaActualizacion) = MONTH(NOW()) AND YEAR(f.FechaActualizacion) = YEAR(NOW())
+    );
+END//
+
+DELIMITER ;
+
+INSERT INTO Medidor (NumeroMedidor, Zona) VALUES
+('0N1DQI45', 'Cala Cala'),
+('D7291D13', 'Tiquipaya'),
+('Y12FG01J', 'Sacaba'),
+('CN12237F', 'Quillacollo'),
+('12H8A0E3', 'Cala Cala'),
+('2L3T1G89', 'Tiquipaya'),
+('J102U3D4', 'Cala Cala');
+
+INSERT INTO Consumo (Consumo, Lectura, Costo, FechaRegistro, FechaActualizacion, IdMedidor) VALUES
+(100.5, '7584', 50, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 1),
+(75.2, '6178', 35, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 2),
+(120.8, '8481', 60, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 3),
+(90.3, '7122', 45, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 4),
+(110.5, '7987', 55, '2023-07-28 14:38:48', '2023-10-09 14:38:48', 2),
+(120.5, '8284', 60, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 1),
+(130.3, '8284', 67, '2023-07-17 16:51:44', '2023-10-03 16:51:44', 3),
+(150.7, '8284', 78, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 3),
+(110.5, '7987', 55, '2023-08-28 16:51:44', '2023-10-03 16:51:44', 1),
+(100.5, '7584', 50, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 5),
+(75.2, '6178', 35, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 7),
+(120.8, '8481', 60, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 5),
+(90.3, '7122', 45, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 7);
+
+INSERT INTO Factura (NumeroMedidor, ConsumoFinal, LecturaFinal, CostoTotal, FechaRegistro, FechaActualizacion, IdMedidor) VALUES 
+('0N1DQI45', 120.5, '8284', 60, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 1),
+('D7291D13', 110.5, '7987', 55, '2023-07-28 14:38:48', '2023-10-09 14:38:48', 2),
+('Y12FG01J', 150.7, '8284', 78, '2023-07-28 16:51:44', '2023-10-03 16:51:44', 3),
+('CN12237F', 90.3, '7122', 45, '2023-07-03 16:51:44', '2023-10-03 16:51:44', 4),
+('0N1DQI45', 110.5, '7987', 55, '2023-08-28 16:51:44', '2023-10-03 16:51:44', 1);
+
+-- Insertar con Actualizar
+
+DELIMITER //
+
+CREATE TRIGGER Insertar_Datos_Consumo
+AFTER INSERT ON Consumo
+FOR EACH ROW
+BEGIN
+    DECLARE numRegistros INT;
+	DECLARE numeroMedidorConsumo VARCHAR(255);
+
+    -- Obtener el NumeroMedidor correspondiente al IdMedidor de la tabla Consumo
+    SELECT NumeroMedidor INTO numeroMedidorConsumo
+    FROM Medidor
+    WHERE Id = NEW.IdMedidor;
+    
+    -- Verificar si ya existe un registro en Factura con el mismo mes e IdMedidor
+    SELECT COUNT(*)
+    INTO numRegistros
+    FROM Factura
+    WHERE MONTH(Factura.FechaRegistro) = MONTH(NEW.FechaRegistro)
+        AND YEAR(Factura.FechaRegistro) = YEAR(NEW.FechaRegistro)
+        AND Factura.IdMedidor = NEW.IdMedidor;
+
+    -- Actualizar o insertar en Factura según el resultado de la verificación
+    IF numRegistros = 0 THEN
+        -- No hay registros, insertar uno nuevo
+        INSERT INTO Factura (NumeroMedidor, ConsumoFinal, LecturaFinal, CostoTotal, IdMedidor)
+        VALUES (numeroMedidorConsumo, NEW.Consumo, NEW.Lectura, NEW.Costo, NEW.IdMedidor);
+    ELSE
+        -- Ya existe un registro, actualizar el existente
+        UPDATE Factura
+        SET NumeroMedidor = numeroMedidorConsumo,
+            ConsumoFinal = NEW.Consumo,
+            LecturaFinal = NEW.Lectura,
+            CostoTotal = NEW.Costo
+        WHERE MONTH(Factura.FechaRegistro) = MONTH(NEW.FechaRegistro)
+            AND YEAR(Factura.FechaRegistro) = YEAR(NEW.FechaRegistro)
+            AND Factura.IdMedidor = NEW.IdMedidor;
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+-- Calcular Costo
+
+DELIMITER //
+CREATE TRIGGER Calcular_Costo
+BEFORE INSERT ON Consumo
+FOR EACH ROW
+BEGIN
+    SET NEW.Costo = NEW.Consumo * 0.6;
+END;
+//
+DELIMITER ;
+
+-- Actualizar tarifa en Factura
+
+DELIMITER //
+
+CREATE TRIGGER Actualizar_Tarifa_Consumo
+AFTER UPDATE ON Consumo
+FOR EACH ROW
+BEGIN
+    DECLARE numRegistros INT;
+	DECLARE numeroMedidorConsumo VARCHAR(255);
+
+    -- Obtener el NumeroMedidor correspondiente al IdMedidor de la tabla Consumo
+    SELECT NumeroMedidor INTO numeroMedidorConsumo
+    FROM Medidor
+    WHERE Id = NEW.IdMedidor;
+    
+    -- Verificar si ya existe un registro en Factura con el mismo mes e IdMedidor
+    SELECT COUNT(*)
+    INTO numRegistros
+    FROM Factura
+    WHERE MONTH(Factura.FechaRegistro) = MONTH(NEW.FechaRegistro)
+        AND YEAR(Factura.FechaRegistro) = YEAR(NEW.FechaRegistro)
+        AND Factura.IdMedidor = NEW.IdMedidor;
+
+        -- Ya existe un registro, actualizar el existente
+        UPDATE Factura
+        SET NumeroMedidor = numeroMedidorConsumo,
+            ConsumoFinal = NEW.Consumo,
+            LecturaFinal = NEW.Lectura,
+            CostoTotal = NEW.Costo
+        WHERE MONTH(Factura.FechaRegistro) = MONTH(NEW.FechaRegistro)
+            AND YEAR(Factura.FechaRegistro) = YEAR(NEW.FechaRegistro)
+            AND Factura.IdMedidor = NEW.IdMedidor;
+END;
+//
+
+DELIMITER ;
+```
 - **API / servicios Web**
 
    Despliegue de la API en un servidor compatible con aplicaciones ASP.NET, en este caso, Somee. 
@@ -148,16 +336,16 @@ Subida de la aplicación mediante el FileManager del hosting para facilitar el c
 Creación de la base de datos denominada "ElfecDB" y ejecución del script de la tabla "User" con sus datos correspondientes. 
 Script: 
 
-Credenciales Hosting: 
+**Credenciales Hosting:**
 
-Username:	GPTesis 
-Password:	1\1\WO23ao4?7Uc< 
+- Username:	GPTesis 
+- Password:	1\1\WO23ao4?7Uc< 
 
-Credenciales BD: 
+**Credenciales BD:** 
 
-SQL Server address:	ElfecDB.mssql.somee.com 
-Login name:		GPTesis_SQLLogin_1 
-Login Password: 	zhr7t8ety5
+- SQL Server address:	ElfecDB.mssql.somee.com 
+- Login name:		GPTesis_SQLLogin_1 
+- Login Password: 	zhr7t8ety5
 
 ## GIT
 - Versión final entregada del proyecto.
@@ -227,3 +415,9 @@ Login Password: 	zhr7t8ety5
   Entity Framework
 
 - APIs de terceros.
+
+
+# DOCKER Y VIDEO
+Docker: https://univalleedu.sharepoint.com/:u:/s/PRIII-LORA/EVC8DqfYeodMo3CB4pRbcHABJR33wb5upwjhfPb3QhvOSg?e=y4c28A
+
+Video: https://youtu.be/ZL7FDv_ryt0
